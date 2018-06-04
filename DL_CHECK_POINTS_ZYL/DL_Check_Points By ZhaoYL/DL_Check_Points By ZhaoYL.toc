@@ -1,0 +1,11 @@
+\contentsline {section}{\numberline {1}综述}{2}
+\contentsline {section}{\numberline {2}考点总结}{4}
+\contentsline {subsection}{\numberline {2.1}小阅}{4}
+\contentsline {subsection}{\numberline {2.2}概念题}{4}
+\contentsline {subsection}{\numberline {2.3}填空题}{7}
+\contentsline {subsection}{\numberline {2.4}证明题}{8}
+\contentsline {subsection}{\numberline {2.5}推导题}{9}
+\contentsline {section}{\numberline {3}Deep Learning兴趣参考}{12}
+\contentsline {subsection}{\numberline {3.1}视频课程类}{12}
+\contentsline {subsection}{\numberline {3.2}工具类 }{12}
+\contentsline {subsection}{\numberline {3.3}博客文档类}{12}

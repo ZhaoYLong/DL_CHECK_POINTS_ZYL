@@ -1,0 +1,278 @@
+\documentclass[UFT8]{ctexart}
+% define the title
+\author{赵云龙}
+\title{Deep Learning Check Points\footnote{DL CHECK POINTS BY ZhaoYL}}
+\begin{document}
+% generates the title
+\maketitle
+% insert the table of contents
+\tableofcontents  \newpage
+\section{综述} 
+	《Deep Learning》这门课程从2018年03月始到2018年05月末结课，历时13周半。执教老师是邓世文老师，邓老师在大三上学期就开始教授我们《Deep Learning》的先导课《模式识别》了。对于邓老师我们并不陌生，我个人倒是觉得邓老师挺酷的。\newline
+~\\
+$\qquad $废话不多说，经过13周的系统学习，我们也应该具备基本的深度学习理论和一定的实践能力（虽然这并不在要求范围内）。首先让我们先回顾一下我们都学习了哪些东西（姑且称那些枯燥而又有趣的理论为东西）：\newline
+~\\
+\qquad 第一章——背景知识，了解数据挖掘、机器学习、模式识别和深度学习的定义及其间的联系与区别；Deep Learning的基本思想及其內的其他术语定义、联系和区别。（详细内容请查看邓老师的《深度学习讲义》或搜索查看）\newline
+~\\
+\qquad 第二章——前馈神经网络与反向传播算法，学习前馈神经网结构；网络参数的学习（更新）方法——梯度下降；反向传播算法，即残差的回传；矩阵微分，即函数微分与导数，函数梯度，Jacobian矩阵等。（这一章不仅是考试推导题的重点还是后面章节学习的基石！）\\
+~\\
+\qquad 第三章——网络输出层单元，这一章主要对深度学习网络的输出层进行探讨，介绍了四种输出单元。分别是线性输出单元、Sigmoid输出单元、Softmax输出单元、Sparse max输出单元。这一章中的Sigmoid、Softmax、Sprsemax会在概念题、填空题、证明题中出现考察形式一般都容易掌握。\\
+~\\
+\qquad 第四章——隐藏层单元，我们都知道一个普通的深度学习网络包含输入层（第1层）、隐藏层（通常有n层）和输出层，残差从输出层反向回传更新隐藏层的学习参数。\\
+学完本章应掌握隐藏单元激活函数与残差的反向传播；Sigmoid和双曲正切函数作为激活函数使用的特点；整流线性单元ReLU；Softmax、Sparsemax作为激活函数使用。（该章进行了一次练习，学生应掌握这次练习，以熟悉深度学习网络的过程。另外，隐藏层饱和态是可能考点出现在概念题中）\\
+~\\
+\qquad 第五章——深度网络的正则化，即采用适当的策略显式地来减少泛化误差。了解参数范数惩罚和Dropout两种正则化方法，特别了解Dropout的思想、优点及带Dropout的信息传播，Dropout可能会在试题的概念题中出现。\\
+~\\
+\qquad 第六章——Autoencode（自编码器AE），掌握基本AE的网络结构和学习算法；了解稀疏自编码器、栈式自编码器、收缩自编码器的基本思想及学习过程。AE的结构和基本思想会在概念题中出现。\\
+~\\
+\qquad 第七章——卷积神经网络（CNN），了解卷积网的历史和种类；熟悉卷积神经网络的整体框架；卷积层学习过程和池化层学习过程；简化架构CNN的训练方法，两种残差的回传；最好后，了解组合特征映射的CNN的学习过程。第七章的卷积层中的局部感受野与共享参数可能会在概念题中出现，卷积层基本的卷积运算会在填空题中出现，简化架构CNN训练方法中的“残差通过卷积层来推导前一层的残差”可能会在证明题中出现。（总而言之，这一章还是比较重要的,可以通过安装TensorFlow来实践卷积神经网络。如果你会python那就更好了，大量的数据处理库、机器学习库将为你服务！参考资料：邓世文老师《深度学习讲义》）\newpage
+\section{考点总结}
+\subsection{小阅} 
+\begin{flushleft}
+课程考察形式：闭卷考试 \\
+题型：概念题、填空题、证明题、推导题\\
+考察范围：《Lecture Notes in Deep Learning》\\
+\end{flushleft}
+~\\
+\begin{center}
+\begin{tabular}{@{} l @{}}
+\hline
+本人将以上述题型的顺序逐一对各考点进行解答与总结！\\
+\end{tabular}
+\end{center}
+\subsection{概念题}
+1、Deep Learning 的基本思想\\
+答：自神经生物学表明大脑神经系统处理是以分层的方式来处理信息的，即高层的特征是低层特征的组合，从低层到高层的特征表示越来越抽象，越来越能表现语义或意图。深度学习借鉴这种分层的信息处理方式，其含有多个层，将当前层的输出作为下一层的输入，通过这种方式实现对输入信息进行分级表达和特征提取。\\
+或答：深度学习借鉴了大脑神经系统以分层的方式处理的信息的方式，其含有多个层，将当前层的输出作为下一层的输入，通过这种方式实现对输入信息进行分级表达和特征提取。
+~\\
+~\\
+ 2、Dropout的目的及优点
+\begin{itemize}
+\item[1)] 使用Dropout的目的：为了显式地减少泛化误差，以约减参数个数并间接地增加数据量，实现防止过拟合的目的。
+\item[2)] Dropout优点：与其他正则方法（稀疏约束等）相比，Dropout更为有效且具有较小的计算开销。Dropout还可以与其他正则方法合并使用，得到进一步的性能提升。
+\item[3)] Dropout的网络连接：（不在考点內）
+\end{itemize}
+~\\
+3、AE的构成与基本思想
+\begin{itemize}
+\item[1)] AE之构成：自编码器内部有一个隐藏层，可以产生编码其可作为输入的一种表示。AE可以看成由两部分构成：一个由函数表示编码器和一个生成重构的解码器，但输出与输入并不完全相同。
+\item[2)] AE基本思想：试图将输入复制到输出。试图将网络的输入转化为网络的输出，常用来实现降维或压缩数据。
+\item[3)] AE值网络结构：不在考点范围内.
+\end{itemize}
+~\\
+4、卷积层中蕴含的两个概念：局部感受野与共享参数
+\begin{itemize}
+\item[1)] 局部感受野：在输入图像中，与隐藏层节点相连的区域称为此节点的局部感受野。
+\item[2)] 共享参数：所谓参数共享，指的是所有隐藏层的节点采用相同的权值和偏置。参数共享意味着隐藏层的所有节点有输入图像的不同位置来检测的是相同的特征。共享参数的好处是极大地减少网络参数。
+\end{itemize}
+~\\
+5、Pooling，池化不变性\\
+答：选择图像中连续范围作为池化区域，并且只是池化相同（重复）的隐藏单元产生的特征，那么，这些池化单元就具有平移不变性。\\
+图像经过一个小的平移、旋转后，仍产生相同的（池化）特征。（*MNIST是一个手写数字库识别库：http://yann.learn.com/exdb/mnist）\\
+~\\
+~\\
+6、隐藏层（Sigmoid）饱和态
+答：饱和态：当z取绝对值很大的整数时，Sigmoid单元饱和到一个高值；当z取绝对值很大的负数时，Sigmoid单元饱和到一个低值；仅当z接近0时，Sigmoid单元才对输入强烈敏感。\\
+~\\
+~\\
+7、输出层作用及常用函数
+\begin{itemize}
+\item[1)] 输出层作用：是对这些特征（隐藏层的输出）进行一些额外的变换以得到符合要求的网络输出，并完成整个网络所需要完成的任务。
+\item[2)] 常用函数：线性输出单元（高斯输出分布）、Sigmoid输出单元（Bernouli输出分布）、Softmax输出单元（Multinoulli输出分布）、Sprsemax输出单元。（详细请阅读深度学习讲义）
+\end{itemize}
+~\\
+8、Machine Learning 中正则化的作用\\
+答：减少泛化误差，限制模型的学习能力；防止过拟合或欠拟合。常用的方法有参数范数惩罚,$l^{2}$参数正则化,$l^{1}$参数正则化,Dropout这几种。\\
+~\\
+~\\
+9、高维数据的流形假设\\
+答：假设高维空间（称作外围空间）中的数据 x 近似位于或接近于一个高维空间中的低维流形上，当x远离此流形时其概率分布p(x)将迅速减少到0。\newpage
+\subsection{填空题}
+\begin{tabular}{@{} l @{}}
+\hline
+（1～3题请牢记讲义中2.4矩阵微分节的规则及2.4.4的举例）
+\end{tabular}
+~\\
+1、迹的循环等价性\\
+$Tr(\mathcal{ABCD}) = Tr(\mathcal{DABC}) = Tr(\mathcal{CDAB}) = Tr(\mathcal{BCDA})$\\
+~\\
+2、含有Hadamard积的迹函数 \\
+$Tr(\mathcal{A(B\circ C}) = Tr(\mathcal{A\circ B)^\mathrm{T}C})$
+~\\
+~\\
+3、求$f(x) = \big\|Ax - b\|_{2} ^{2}$的梯度\\
+解：
+\begin{displaymath}
+\mathrm{d}f = (A\mathrm{d} x)^\mathrm{T}(Ax - b) + (Ax - b)^\mathrm{T}A\mathrm{d} x  
+\end{displaymath}
+\begin{displaymath}
+ \quad \quad = (\mathrm{d}x)^\mathrm{T}A^\mathrm{T}(Ax - b) + (Ax - b)^\mathrm{T}A\mathrm{d}x 
+\end{displaymath}
+\begin{displaymath}
+ =  2(Ax - b)^\mathrm{T}A\mathrm{d}x \quad \qquad \quad  \quad \quad 
+ \end{displaymath}
+ 因此，
+ $ J = 2(Ax - b)^\mathrm{T}A, \bigtriangledown_{x} = 2A^\mathrm{T}(Ax - b)$
+ ~\\
+ ~\\
+ 4、求$Sigmoid()$的梯度或导数 \\
+ 解：
+ $ f(x) = sigmoid(x)  = \frac{1}{1 + exp(-x)}$\\
+ ~\\
+ $f(x)' = (\frac{1}{1 + exp(-x)})' =\frac{exp(-x)}{(1 + exp(-x))^{2}} $\\
+ ~\\
+ 另解：
+ $f(x)' = f(x) - f(x)^{2} = f(x)(1 - f(x)) $
+ ~\\
+ ~\\
+ 5、$Sparsemax(z)$函数的优化问题，即要满足KKT条件（讲义第31页）\\
+ 解：
+ \[ min_{q} \frac{1}{2} \big\|p - z\|_{2}^{2} \]  
+ \[s.t. \quad 1^\mathrm{T}p = 1 \] 
+ \[ p \geq 0 \] 
+ ~\\
+ 上述问题含有1个等式约束和$K$格不等式约束，其$Lagrangian$为\\
+ \[ L(z,\mu,\tau) = \frac{1}{2}\big\|p -z\|_{2}^{2} - (\mu)^\mathrm{T}p + \tau(1^\mathrm{T}p -1) \]
+ ~\\
+ KKT条件：\\
+ 令$p^{*},\mu^{*},\tau^{*}$为在最优点处的解，则其KKT条件为 \\
+ \[ p^{*} - z - \mu^{*} + \tau^{*}1 = 0 \]
+ \[ 1^\mathrm{T}p^{*} = 1 \]
+\[ p^{*} \geq 0 \]
+\[ \mu^{*} \geq 0 \]
+\[ \mu^{*}p^{*} = 0, \quad \forall \in [k] \]
+~\\
+\subsection{证明题}
+1、已知$Softmax$函数 $a = softmax(z) =exp(z)/1’exp(z)$,证明$softmax$函数作为激活函数时的梯度为$diag(a) - aa^\mathrm{T}$.\\
+证：（该题位于讲义第四章隐藏层单元，证明详细且正确。）\\
+求$softmax$函数的微分：\\
+\begin{displaymath}
+\mathrm{d} (softmax(z);z) = diag(a)\mathrm{d} z - a1^\mathrm{T}diag(a)\mathrm{d} z
+\end{displaymath}
+\[ \qquad \qquad = diag(a)\mathrm{d}z - aa^\mathrm{T}\mathrm{d}z\]
+注：$1^\mathrm{T}diag(a) = a^\mathrm{T}$。\\
+因此，$softmax$函数的梯度为
+\[ \bigtriangledown_{z}softmax(z) = diag(a) - aa^\mathrm{T} \]
+~\\
+
+2、证明残差通过卷积层，已知$l+1$层（卷积层）残差，推导残差通过卷积层回传的公式. \\
+证：（位于讲义第七章第76～77页，详细。请自行阅读、推导和证明）
+\[ \to_{z_{l}} Pooling:f(z) \to_{a_{l}} down(z) \to_{z_{l+1}} Convolutional:f(z) \] 
+信息的正向传播过程为
+\[ Pooling: a_{l} = f(z_{l}) \]
+\[Convolutional: z_{l+1} = \omega \ast a_{l} + b11^\mathrm{T} \]
+求微分
+\[ \mathrm{d}(J;z_{l}) = Tr(D[J;z_{l+1}]\mathrm{d}(z_{l+1};z_{l}))  \]
+\[ = Tr((\delta_{l+1})^\mathrm{T}[\omega \ast \mathrm{d}(a_{l};z_{l}])) \]
+\[ =Tr((\delta_{l+1})^\mathrm{T}W(f'(z_{l}) \circ \mathrm{d}z_{l})) \]
+\[ = Tr([(\delta_{l+1})^\mathrm{T}W) \circ (f')^\mathrm{T}(z_{l})]\mathrm{d}z_{l}) \]
+因此，梯度为
+\[ \delta_{l} = \bigtriangledown_{z_{l}}J = (\widetilde{\omega} \ast \delta_{l+1}) \circ f'(z_{l}) \]
+相对应的$MATLAB$代码为
+\[ r1 = conv2(rot90(\omega,2),r2,'full') .*f'(z_{l}) \]
+其中，$r:residual$(残差）$r1$：当前$l$层残差；$r2$：第$l+1$层残差。$f'():f()$的导数。$z_{l}$:第$l$层的净输入。\\
+~\\
+~\\
+\subsection{推导题}
+1、推导：前馈神经网络的反向传播算法（基于向量）\\
+问：
+\begin{itemize}
+\item[(1)] $J()$关于$W$的梯度；
+\item[(2)] $J()$关于$b$的梯度；
+\item[(3)] 当前层残差与前一层残差的关系；
+\item[(4)] $(W,b)$参数学习（更新）.
+\end{itemize}
+答：（本题位于第一版讲义第二章第7～9页，（2.4节）残差的反向传播贯穿整个深度学习的始末也是基础，希望同学掌握！）\\
+$(a)$输入数据$x \in \mathrm{R}^{N}$, 输出$a \in \mathrm{R}^{M}$。\\
+$(b)$网络参数: $W \in \mathrm{R}^{M \times N}$。 \\
+$(c)$净输入:$z = Wx + b$,非线性输出:$a = f(z)$。\\
+$(d)$深层网络架构:
+\[a_{1} =x \to z_{2}|a_{2} \to \ldots \to z_{l}| a_{l} \to
+J(z_{l}) \] \\
+$(e)$信息的正向传播\\
+第1层输出：$a_{1} = x$\\
+第2层输出：$a_{2} = f(z_{2}),z_{2} = W_{1}a_{1} + b_{1}$;\\
+$\quad \vdots$\\
+第$l$层：$a_{l} = f(z_{l}),z_{l} = W_{l-1}a_{l-1} + b_{l}$;\\
+$\quad \vdots$\\
+第$L$层：$J(z_{L}) = \frac{1}{2}\big\|z_{L} - y\|_{2}^{2}$.\\
+$(f)$反向传播算法 \\
+求解第$l$层网络参数相当于求解第$L$层目标函数优化问题\\
+令y是x的函数，D[y;x]表示y对x的Jacobian矩阵，即\\
+\(\bigtriangledown_{x}y = \frac{\partial_{y}}{\partial_{x}} = D[y;x]^\mathrm{T}\)。\\
+~\\
+$(1) J$关于$W$的梯度\\
+J关于参数$W_{l}$的微分\\
+\(\mathrm{d}(J;W_{l})= Tr(D[J;z_{l+1}]\mathrm{d}(z_{l+1};W_{l})) \) \\
+\( = Tr(D[J;z_{l+1}]\mathrm{d}(W_{l}a_{l})) \) \\
+\( = Tr(a_{l}D[J;z_{l+1}]\mathrm{d}(W_{l})) \) \\
+J关于参数$W_{l}$的梯度
+\[ \bigtriangledown_{w_{1}}J = D[J;z_{l+1}]^\mathrm{T}(a_{l})^\mathrm{T} = \bigtriangledown_{z_{l+1}}J(a_{l})^\mathrm{T} = \delta_{l+1}(a_{l})^\mathrm{T}\]
+~\\
+$(2) J$关于$b_{l}$的梯度 \\
+J关于参数$b_{l}$的微分\\
+$\mathrm{d}(J;b_{l}) = Tr(D[J;z_{l+1}]\mathrm{d}(z_{l});D[J;z_{l+1}]\mathrm{d}b_{l})$ \\
+$ = Tr(D[J;z_{l+1}]\mathrm{d} b_{l})$ \\
+J关于参数$b_{l}$的梯度
+\[ \bigtriangledown_{b_{l}}J = D[J;z_{l+1}]^\mathrm{T} = \delta_{l+1} \]
+~\\
+$(3)$ 当前层残差与前一层残差的关系 \\
+由信息的正向传播关系，可的到
+\[ a_{l} = f(z_{l}) \] 
+\[ z_{l+1} = W_{l} + b_{l} \] 
+即 
+\[ z_{l+1} = W_{l}f(z_{l}) + b_{l} \]  
+残差$\delta_{l}$与$\delta_{l+1}$的关系  
+\[ \mathrm{d}(J;z_{l}) = Tr(D[J;z_{l+1}]\mathrm{d}(z_{l+1};z_{l})) \]
+\[ = Tr(D[J;z_{l+1}]W_{l}\mathrm{d}(f(z_{l};z_{l}))) \]
+\[ = Tr(D[J;z_{l+1}]W_{l}(f'(z_{l}) \circ \mathrm{d}z_{l})) \]
+\[ = Tr([(D[J;z_{l+1}]W_{l}) \circ (f')^\mathrm{T}(z_{l})]\mathrm{d}z_{l}) \]
+因此，得到
+\[ \delta_{l} = ((W_{l})^\mathrm{T}\delta_{l+1}) \circ f'(z_{l}) \] 
+~\\
+$(4)$参数更新方法 \\
+\[ W_{l}^{(k+1)} = W_{l}^{(k)} - \lambda \bigtriangledown_{w_{l}}J \]
+\[ b_{l}^{(k+1)} = b_{l}^{(k)} - \lambda \bigtriangledown_{b_{l}}J \]
+其中，参数的梯度为
+\[ \bigtriangledown_{w_{l}}J = \delta_{l}a_{l-1}^\mathrm{T} \]
+\[ \bigtriangledown_{b_{l}}J = \delta_{l} \]
+\newpage
+\section{Deep Learning兴趣参考}
+\subsection{视频课程类}
+~\\
+1.0	https://www.coursera.org \\
+1.1	网易公开课或者其他视频资料\\
+1.2	阿里云、天池等\\
+\ldots
+~\\
+\subsection{工具类 }
+~\\
+2.0 	Tensorflow http://www.tensorfly.cn\\
+2.1	Scikit-learn http://cwiki.apachecn.org/pages/viewpage.action?pageId=10030179\\
+2.2	Python 太多了，不列举了！\\
+2.3	Matlab or Octave \\
+2.4	人脸识别库 $https://github.com/ageitgey/face_recognition$\\
+2.5	像Dlib、Opencv、Numpy太多了！\\
+2.6	强大的Github！\\
+\ldots
+~\\
+\subsection{博客文档类}
+~\\
+$[-]Tip\footnote{You can find this article on my GitHub!} $\\
+3.0	https://github.com/PacktPublishing/Python-Machine-\\
+Learning-Blueprints/blob/master/Chapter \\
+3.1	http://www.deeplearningbook.org  \\
+3.2	http://www.cs.ubc.ca/~schmidtm/ \\ 
+3.3	http://nkonst.com/machine-learning-explained-simple-words/ \\
+3.4	http://speech.ee.ntu.edu.tw/~tlkagk/courses.html  \\
+3.5	https://nips.cc/ \\
+3.6	https://icml.cc/ \\
+3.7	http://www.jmlr.org/ \\
+3.8	http://www.tensorfly.cn/ \\
+@	https://github.com/tataya\footnote{Follow me on GitHub!}/  \\
+\ldots
+\begin{center}
+总之，非常多。什么开源中国、CSDN、博客园、各种技术社区、Stackflow、JMLR、NIP、ICCML、阿里云国内国外会议期刊，自己找吧！\\
+\fbox{强烈推荐\LaTeX !}
+\end{center}
+\end{document}
