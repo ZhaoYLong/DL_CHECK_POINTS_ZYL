@@ -25,7 +25,8 @@ $\qquad $废话不多说，经过13周的系统学习，我们也应该具备基
 ~\\
 \qquad 第六章——Autoencode（自编码器AE），掌握基本AE的网络结构和学习算法；了解稀疏自编码器、栈式自编码器、收缩自编码器的基本思想及学习过程。AE的结构和基本思想会在概念题中出现。\\
 ~\\
-\qquad 第七章——卷积神经网络（CNN），了解卷积网的历史和种类；熟悉卷积神经网络的整体框架；卷积层学习过程和池化层学习过程；简化架构CNN的训练方法，两种残差的回传；最好后，了解组合特征映射的CNN的学习过程。第七章的卷积层中的局部感受野与共享参数可能会在概念题中出现，卷积层基本的卷积运算会在填空题中出现，简化架构CNN训练方法中的“残差通过卷积层来推导前一层的残差”可能会在证明题中出现。（总而言之，这一章还是比较重要的,可以通过安装TensorFlow来实践卷积神经网络。如果你会python那就更好了，大量的数据处理库、机器学习库将为你服务！参考资料：邓世文老师《深度学习讲义》）\newpage
+\qquad 第七章——卷积神经网络（CNN），了解卷积网的历史和种类；熟悉卷积神经网络的整体框架；卷积层学习过程和池化层学习过程；简化架构CNN的训练方法，两种残差的回传；最好后，了解组合特征映射的CNN的学习过程。第七章的卷积层中的局部感受野与共享参数可能会在概念题中出现，卷积层基本的卷积运算会在填空题中出现，简化架构CNN训练方法中的“残差通过卷积层来推导前一层的残差”可能会在证明题中出现。（总而言之，这一章还是比较重要的,可以通过安装TensorFlow来实践卷积神经网络。如果你会python那就更好了，大量的数据处理库、机器学习库将为你服务！参考资料：邓世文老师《深度学习讲义》）
+\newpage
 \section{考点总结}
 \subsection{小阅} 
 \begin{flushleft}
@@ -97,7 +98,7 @@ $\qquad $废话不多说，经过13周的系统学习，我们也应该具备基
 $Tr(\mathcal{ABCD}) = Tr(\mathcal{DABC}) = Tr(\mathcal{CDAB}) = Tr(\mathcal{BCDA})$\\
 ~\\
 2、含有Hadamard积的迹函数 \\
-$Tr(\mathcal{A(B\circ C}) = Tr(\mathcal{A\circ B)^\mathrm{T}C})$
+$Tr(\mathcal{A(B\circ C}) = Tr(\mathcal{A\circ B^\mathrm{T})C})$
 ~\\
 ~\\
 3、求$f(x) = \big\|Ax - b\|_{2} ^{2}$的梯度\\
@@ -140,10 +141,10 @@ $Tr(\mathcal{A(B\circ C}) = Tr(\mathcal{A\circ B)^\mathrm{T}C})$
  \[ 1^\mathrm{T}p^{*} = 1 \]
 \[ p^{*} \geq 0 \]
 \[ \mu^{*} \geq 0 \]
-\[ \mu^{*}p^{*} = 0, \quad \forall \in [k] \]
+\[ \mu^{*}p^{*} = 0, \quad \forall i \in [k] \]
 ~\\
 \subsection{证明题}
-1、已知$Softmax$函数 $a = softmax(z) =exp(z)/1’exp(z)$,证明$softmax$函数作为激活函数时的梯度为$diag(a) - aa^\mathrm{T}$.\\
+1、已知$Softmax$函数 $a = softmax(z) =exp(z)/1^\mathrm{T}exp(z)$,证明$softmax$函数作为激活函数时的梯度为$diag(a) - aa^\mathrm{T}$.\\
 证：（该题位于讲义第四章隐藏层单元，证明详细且正确。）\\
 求$softmax$函数的微分：\\
 \begin{displaymath}
@@ -153,6 +154,7 @@ $Tr(\mathcal{A(B\circ C}) = Tr(\mathcal{A\circ B)^\mathrm{T}C})$
 注：$1^\mathrm{T}diag(a) = a^\mathrm{T}$。\\
 因此，$softmax$函数的梯度为
 \[ \bigtriangledown_{z}softmax(z) = diag(a) - aa^\mathrm{T} \]
+注：由于$softmax()$函数的导数形式过于复杂，编译时出现错误，固在此省略！
 ~\\
 
 2、证明残差通过卷积层，已知$l+1$层（卷积层）残差，推导残差通过卷积层回传的公式. \\
@@ -207,7 +209,7 @@ J关于参数$W_{l}$的微分\\
 \( = Tr(D[J;z_{l+1}]\mathrm{d}(W_{l}a_{l})) \) \\
 \( = Tr(a_{l}D[J;z_{l+1}]\mathrm{d}(W_{l})) \) \\
 J关于参数$W_{l}$的梯度
-\[ \bigtriangledown_{w_{1}}J = D[J;z_{l+1}]^\mathrm{T}(a_{l})^\mathrm{T} = \bigtriangledown_{z_{l+1}}J(a_{l})^\mathrm{T} = \delta_{l+1}(a_{l})^\mathrm{T}\]
+\[ \bigtriangledown_{w_{l}}J = D[J;z_{l+1}]^\mathrm{T}(a_{l})^\mathrm{T} = \bigtriangledown_{z_{l+1}}J(a_{l})^\mathrm{T} = \delta_{l+1}(a_{l})^\mathrm{T}\]
 ~\\
 $(2) J$关于$b_{l}$的梯度 \\
 J关于参数$b_{l}$的微分\\
@@ -219,7 +221,7 @@ J关于参数$b_{l}$的梯度
 $(3)$ 当前层残差与前一层残差的关系 \\
 由信息的正向传播关系，可的到
 \[ a_{l} = f(z_{l}) \] 
-\[ z_{l+1} = W_{l} + b_{l} \] 
+\[ z_{l+1} = W_{l}a_{l} + b_{l} \] 
 即 
 \[ z_{l+1} = W_{l}f(z_{l}) + b_{l} \]  
 残差$\delta_{l}$与$\delta_{l+1}$的关系  
@@ -234,8 +236,9 @@ $(4)$参数更新方法 \\
 \[ W_{l}^{(k+1)} = W_{l}^{(k)} - \lambda \bigtriangledown_{w_{l}}J \]
 \[ b_{l}^{(k+1)} = b_{l}^{(k)} - \lambda \bigtriangledown_{b_{l}}J \]
 其中，参数的梯度为
-\[ \bigtriangledown_{w_{l}}J = \delta_{l}a_{l-1}^\mathrm{T} \]
-\[ \bigtriangledown_{b_{l}}J = \delta_{l} \]
+\[ \bigtriangledown_{w_{l}}J = \delta_{l}a_{l-1}^\mathrm{T}  \quad ( = \delta_{l+1}a_{l}^\mathrm{T} ) \]  
+\[ \bigtriangledown_{b_{l}}J = \delta_{l} \quad ( = \delta_{l+1} ) \]
+注：我并不确定哪种形式是对的！
 \newpage
 \section{Deep Learning兴趣参考}
 \subsection{视频课程类}
@@ -279,6 +282,9 @@ Learning-Blueprints/blob/master/Chapter \\
 ~\\
 ~\\
 ~\\
-\begin{thebibliography}{99}\bibitem{}Shi-wen Deng:Lecture Notes in Deep Learning
-\bibitem{} www.deeplearningbook.org\end{thebibliography}
+\begin{thebibliography}{99}
+\bibitem{}Shi-wen Deng:
+Lecture Notes in Deep Learning
+\bibitem{} www.deeplearningbook.org
+\end{thebibliography}
 \end{document}
